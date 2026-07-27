@@ -2013,6 +2013,25 @@ h1 em{font-style:normal;color:var(--gold);display:block;font-size:.6em;margin-to
 .sort-btn.wrong{background:#fdeef2;border-color:var(--rose);color:var(--rose);animation:shake .35s}
 .sort-btn:disabled{opacity:.5;cursor:default}
 
+/* GUIDED decision flow */
+.guide-intro{background:#fff;border:2px solid var(--p1s);border-radius:16px;padding:16px 18px;margin-bottom:14px}
+.gi-title{font-weight:700;color:var(--p1);margin-bottom:6px}
+.gi-lead{font-size:.9rem;color:#5a6478;margin-bottom:10px}
+.gi-steps{display:flex;flex-direction:column;gap:8px}
+.gi-step{display:flex;align-items:center;gap:10px;background:var(--paper);border-radius:10px;padding:9px 12px;font-size:.9rem}
+.gs-n{font-family:'Space Mono',monospace;font-weight:700;color:#fff;background:var(--p1);min-width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.78rem;flex-shrink:0}
+.gs-tag{margin-left:auto;font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:var(--p1);white-space:nowrap}
+.guide-game .guide-steps{margin-top:12px;display:flex;flex-direction:column;gap:12px}
+.gstep{background:var(--paper);border-radius:12px;padding:13px 15px;animation:fade .35s ease}
+.gstep.final-step{background:#eef7f1;border:1.5px solid var(--p1s)}
+.gq{font-size:.94rem;font-weight:500;margin-bottom:10px;color:var(--ink)}
+.gq-n{font-family:'Space Mono',monospace;font-size:.68rem;font-weight:700;color:#fff;background:var(--p1s);border-radius:6px;padding:2px 8px;margin-right:8px}
+.final-step .gq-n{background:var(--p1)}
+.gopts{display:flex;flex-wrap:wrap;gap:8px}
+.gfb{margin-top:9px;font-size:.85rem;display:none}
+.gfb.ok{display:block;color:var(--teal);font-weight:500}
+.gfb.no{display:block;color:var(--rose)}
+
 /* confetti */
 #fx{position:fixed;inset:0;pointer-events:none;z-index:9999}
 .confetti{position:absolute;width:10px;height:10px;will-change:transform,opacity}
@@ -2133,16 +2152,40 @@ p1:{
       {sent:'Shackleton ordered the crew off the ship, ___ tents on the ice.',owner:&quot;the crew（船員主動搭）&quot;,ans:&quot;pitching&quot;,opts:[&quot;pitching&quot;,&quot;pitched&quot;],
        ex:&quot;棄船後<b>主動</b>搭帳篷 → <b>pitching</b>。pitch a tent＝搭帳篷。&quot;,restore:'..., <span class=&quot;keep&quot;>pitching</span> = and they <span class=&quot;keep&quot;>pitched</span> tents'}
      ]},
-    {label:&quot;STAGE 5 · 大魔王：分詞片語？分詞構句？還是動名詞？&quot;,
-     sort:true,
+    {label:&quot;STAGE 5 · 大魔王：三個問題，一步步判斷&quot;,
+     guide:true,
+     intro:&quot;這關不用猜！看到 V-ing 或 p.p.，照順序問三個問題，答案自己會跑出來：&quot;,
+     steps:[&quot;① 把它整坨拿掉，句子還完整嗎？（它是不是『一件事』當主詞／受詞？）&quot;,&quot;② 它是不是緊黏在一個名詞後面，說『哪一個』？&quot;,&quot;③ 它在逗號旁邊，補充原因／時間／結果嗎？&quot;],
      qs:[
-      {sent:'<u>Taking a nap</u> in the middle of the day is not unproductive.',ans:&quot;動名詞&quot;,why:&quot;『午睡這件事』當主詞（Taking...is）→ <b>動名詞</b>，不是分詞。&quot;},
-      {sent:'students <u>studying</u> English in the library',ans:&quot;分詞片語&quot;,why:&quot;黏在名詞 students 旁邊，說『哪些學生』→ <b>分詞片語</b>（＝who study）。&quot;},
-      {sent:'<u>Designed</u> by an engineer, the product sold well.',ans:&quot;分詞構句&quot;,why:&quot;句首補充原因、逗號後接主要句 → <b>分詞構句</b>（＝Because it was designed）。&quot;},
-      {sent:'<u>Understanding</u> how to nap is vital for health.',ans:&quot;動名詞&quot;,why:&quot;『理解這件事』當主詞（Understanding...is）→ <b>動名詞</b>。&quot;},
-      {sent:'The product, ___ , created huge profit — steps <u>carved</u> in stone.',ans:&quot;分詞片語&quot;,why:&quot;carved 黏在 steps 旁邊說『哪些階梯』→ <b>分詞片語</b>（＝which were carved）。&quot;,sentOverride:'185 steps <u>carved</u> in stone and marble'}
-     ],
-     sortOpts:[&quot;動名詞&quot;,&quot;分詞片語&quot;,&quot;分詞構句&quot;]}
+      {sent:'<u>Taking a nap</u> in the middle of the day is not unproductive.',
+       q1:{ask:&quot;把 Taking a nap 拿掉，剩『___ is not unproductive』——句子還有主詞嗎？&quot;,opts:[&quot;沒有主詞了（它就是主詞）&quot;,&quot;還有別的主詞&quot;],ans:&quot;沒有主詞了（它就是主詞）&quot;,
+           yes:&quot;對！Taking a nap 自己就是主詞（一件事）。&quot;,no:&quot;再看：is 前面沒有別的名詞了，Taking a nap 就是主詞。&quot;},
+       final:&quot;動名詞&quot;,why:&quot;它是主詞（『午睡這件事』）→ <b>動名詞</b>，第一問就結束了。口訣：<b>能當主詞／受詞的一件事＝動名詞</b>。&quot;},
+      {sent:'students <u>studying</u> English in the library are quiet.',
+       q1:{ask:&quot;把 studying English 拿掉，剩『students are quiet』——句子完整嗎？&quot;,opts:[&quot;完整（它不是主詞）&quot;,&quot;不完整&quot;],ans:&quot;完整（它不是主詞）&quot;,
+           yes:&quot;對，拿掉還完整 → 它不是動名詞主詞，往下問第②題。&quot;,no:&quot;students are quiet 是完整句，所以 studying 不是主詞。&quot;},
+       q2:{ask:&quot;studying 緊黏在哪個名詞後面，在說『哪些』？&quot;,opts:[&quot;students（哪些學生）&quot;,&quot;沒有黏名詞&quot;],ans:&quot;students（哪些學生）&quot;,
+           yes:&quot;對！黏著 students 說『哪些學生』。&quot;,no:&quot;它就在 students 正後面，說明是哪些學生。&quot;},
+       final:&quot;分詞片語&quot;,why:&quot;黏名詞、說『哪一個』→ <b>分詞片語</b>（＝students <b>who study</b> English）。&quot;},
+      {sent:'<u>Designed</u> by an engineer, the product sold well.',
+       q1:{ask:&quot;把 Designed by an engineer 拿掉，剩『the product sold well』——完整嗎？&quot;,opts:[&quot;完整（它不是主詞）&quot;,&quot;不完整&quot;],ans:&quot;完整（它不是主詞）&quot;,
+           yes:&quot;對，拿掉還完整 → 不是動名詞，往下問。&quot;,no:&quot;the product sold well 是完整句。&quot;},
+       q2:{ask:&quot;Designed 有緊黏在某個名詞後面嗎？&quot;,opts:[&quot;沒有，它在句首逗號前&quot;,&quot;有黏名詞&quot;],ans:&quot;沒有，它在句首逗號前&quot;,
+           yes:&quot;對，它不是黏名詞，而是在句首＋逗號 → 往下問第③題。&quot;,no:&quot;它在句首，後面隔著逗號才接主要句，不是黏名詞。&quot;},
+       q3:{ask:&quot;它在逗號旁補充『為什麼／什麼時候』嗎？&quot;,opts:[&quot;是，補充原因&quot;,&quot;不是&quot;],ans:&quot;是，補充原因&quot;,
+           yes:&quot;對！＝Because it was designed... 補充原因。&quot;,no:&quot;它補充的是『因為被設計』這個原因。&quot;},
+       final:&quot;分詞構句&quot;,why:&quot;句首＋逗號＋補充原因 → <b>分詞構句</b>（＝<b>Because it was designed</b> by an engineer）。&quot;},
+      {sent:'<u>Understanding</u> how to nap well is vital for health.',
+       q1:{ask:&quot;把 Understanding how to nap well 拿掉，剩『___ is vital』——還有主詞嗎？&quot;,opts:[&quot;沒有主詞了（它就是主詞）&quot;,&quot;還有別的主詞&quot;],ans:&quot;沒有主詞了（它就是主詞）&quot;,
+           yes:&quot;對！它自己是主詞（『理解這件事』）。&quot;,no:&quot;is 前面沒別的名詞，它就是主詞。&quot;},
+       final:&quot;動名詞&quot;,why:&quot;當主詞的一件事 → <b>動名詞</b>。跟第一題同型，第一問就分辨出來。&quot;},
+      {sent:'185 steps <u>carved</u> in stone and marble led to the top.',
+       q1:{ask:&quot;把 carved in stone and marble 拿掉，剩『185 steps led to the top』——完整嗎？&quot;,opts:[&quot;完整（它不是主詞）&quot;,&quot;不完整&quot;],ans:&quot;完整（它不是主詞）&quot;,
+           yes:&quot;對，拿掉還完整 → 不是動名詞。&quot;,no:&quot;185 steps led to the top 是完整句。&quot;},
+       q2:{ask:&quot;carved 緊黏哪個名詞，說『哪些』？&quot;,opts:[&quot;steps（哪些階梯）&quot;,&quot;沒有黏名詞&quot;],ans:&quot;steps（哪些階梯）&quot;,
+           yes:&quot;對！黏著 steps 說『哪些階梯』。&quot;,no:&quot;它在 steps 正後面，說明哪些階梯。&quot;},
+       final:&quot;分詞片語&quot;,why:&quot;黏名詞說『哪一個』→ <b>分詞片語</b>（＝steps <b>which were carved</b> in stone）。p.p. 也可以是分詞片語喔！&quot;}
+     ]}
   ],
   badge:{icon:&quot;🥇&quot;,title:&quot;分詞大師&quot;,sub:&quot;115 學測分詞句，全部拆得開！&quot;}
 },
@@ -2300,8 +2343,23 @@ function buildTopic(key){
     done.className='stage-done';
     done.innerHTML=`✓ 這關全對！${si+1<totalStages?'下一關更強 💪':'最後一關也破了！'}`;
 
+    // guided stage: show a decision-flow intro card
+    if(stage.guide){
+      const gi=document.createElement('div');
+      gi.className='guide-intro';
+      gi.innerHTML=`<div class=&quot;gi-title&quot;>🧭 判斷三步驟（照順序問，中了就停）</div>
+        <p class=&quot;gi-lead&quot;>${stage.intro}</p>
+        <div class=&quot;gi-steps&quot;>${stage.steps.map((s,i)=>`<div class=&quot;gi-step&quot;><span class=&quot;gs-n&quot;>${i+1}</span><span>${s.replace(/^[①②③]\s*/,'')}</span><span class=&quot;gs-tag&quot;>${['→ 動名詞','→ 分詞片語','→ 分詞構句'][i]}</span></div>`).join('')}</div>`;
+      el.appendChild(gi);
+    }
+
     stage.qs.forEach((q,qi)=>{
-      if(stage.sort){
+      if(stage.guide){
+        el.appendChild(buildGuide(key,si,qi,q,()=>{
+          solved++;$(`sc-${key}-${si}`).textContent=`${solved}/${stage.qs.length}`;
+          if(solved===stage.qs.length){done.classList.add('show');stageDoneCount++;checkTopicDone();}
+        }));
+      }else if(stage.sort){
         el.appendChild(buildSort(key,si,qi,q,stage,()=>{
           solved++;$(`sc-${key}-${si}`).textContent=`${solved}/${stage.qs.length}`;
           if(solved===stage.qs.length){done.classList.add('show');stageDoneCount++;checkTopicDone();}
@@ -2389,6 +2447,91 @@ function buildSort(key,si,qi,q,stage,onSolve){
     };
     box.appendChild(b);
   });
+  return g;
+}
+
+/* GUIDED decision game: walk through q1 -> q2 -> q3 -> final answer */
+function buildGuide(key,si,qi,q,onSolve){
+  const g=document.createElement('div');
+  g.className='game guide-game';
+  g.innerHTML=`<div class=&quot;qtag&quot;>跟著問，一步一步縮小範圍</div>
+    <div class=&quot;sent&quot;>${q.sent}</div>
+    <div class=&quot;guide-steps&quot;></div>
+    <div class=&quot;explain&quot;><b>✓ 答對！</b> <span class=&quot;whytext&quot;></span></div>`;
+  const steps=g.querySelector('.guide-steps');
+  const explain=g.querySelector('.explain');
+
+  // ordered list of sub-questions present on this q
+  const subKeys=['q1','q2','q3'].filter(k=>q[k]);
+  const finalOpts=[&quot;動名詞&quot;,&quot;分詞片語&quot;,&quot;分詞構句&quot;];
+  let idx=0;
+
+  function renderStep(){
+    if(idx<subKeys.length){
+      const sub=q[subKeys[idx]];
+      const step=document.createElement('div');
+      step.className='gstep';
+      step.innerHTML=`<div class=&quot;gq&quot;><span class=&quot;gq-n&quot;>問${idx+1}</span>${sub.ask}</div><div class=&quot;gopts&quot;></div><div class=&quot;gfb&quot;></div>`;
+      const opts=step.querySelector('.gopts');
+      const fb=step.querySelector('.gfb');
+      [...sub.opts].sort(()=>Math.random()-.5).forEach(o=>{
+        const b=document.createElement('button');
+        b.className='opt';b.textContent=o;
+        b.onclick=(ev)=>{
+          if(step.classList.contains('locked'))return;
+          if(o===sub.ans){
+            b.classList.add('right');
+            opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+            step.classList.add('locked');
+            fb.className='gfb ok';fb.innerHTML='✓ '+sub.yes;
+            const r=b.getBoundingClientRect();floatXP(r.left+r.width/2,r.top);
+            idx++;
+            setTimeout(renderStep,250);
+          }else{
+            b.classList.add('wrong');b.disabled=true;
+            fb.className='gfb no';fb.innerHTML='✗ '+sub.no;
+            breakStreak();
+          }
+        };
+        opts.appendChild(b);
+      });
+      steps.appendChild(step);
+      step.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }else{
+      // final classification
+      const step=document.createElement('div');
+      step.className='gstep final-step';
+      step.innerHTML=`<div class=&quot;gq&quot;><span class=&quot;gq-n&quot;>結論</span>所以這個是哪一種？</div><div class=&quot;gopts&quot;></div><div class=&quot;gfb&quot;></div>`;
+      const opts=step.querySelector('.gopts');
+      const fb=step.querySelector('.gfb');
+      [...finalOpts].sort(()=>Math.random()-.5).forEach(o=>{
+        const b=document.createElement('button');
+        b.className='opt';b.textContent=o;
+        b.onclick=(ev)=>{
+          if(g.classList.contains('correct'))return;
+          if(o===q.final){
+            b.classList.add('right');
+            opts.querySelectorAll('.opt').forEach(x=>x.disabled=true);
+            g.classList.add('correct');
+            fb.className='gfb ok';fb.innerHTML='✓ 完全正確！';
+            g.querySelector('.whytext').innerHTML=q.why;
+            explain.classList.add('show');
+            const r=b.getBoundingClientRect();
+            addStar(r.left+r.width/2,r.top);
+            onSolve();
+          }else{
+            b.classList.add('wrong');b.disabled=true;
+            fb.className='gfb no';fb.innerHTML='✗ 回頭看你上面三問的答案，再決定一次。';
+            breakStreak();
+          }
+        };
+        opts.appendChild(b);
+      });
+      steps.appendChild(step);
+      step.scrollIntoView({behavior:'smooth',block:'nearest'});
+    }
+  }
+  renderStep();
   return g;
 }
 
